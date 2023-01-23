@@ -6,8 +6,8 @@ interface Color {
 
 const color: Color = {
     red: 255,
-    green: 0,
-    blue: 0
+    green: 20,
+    blue: 20
 };
 
 console.log(color);
