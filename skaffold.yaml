@@ -8,7 +8,7 @@ build:
   local:
     push: false
   artifacts:
-    - image: deukhwa/auth
+    - image: deukhwajeong/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -23,4 +23,12 @@ build:
       sync:
         manual:
           - src: "**/*.js"
+            dest: .
+    - image: deukhwajeong/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
             dest: .
