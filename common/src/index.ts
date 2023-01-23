@@ -1,3 +1,4 @@
+// This file is used to export all the files in the common folder
 export * from './errors/bad-request-error';
 export * from './errors/custom-error';
 export * from './errors/database-connection-error';
