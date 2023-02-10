@@ -5,6 +5,7 @@ import {
     NotFoundError,
     requireAuth,
     NotAuthorizedError,
+    BadRequestError,
 } from '@deukhwatickets/common';
 import { Ticket } from '../models/ticket';
 import { TicketUpdatedPublisher } from '../events/publisher/ticket-updated-publisher';
@@ -29,6 +30,10 @@ router.put('/api/tickets/:id', requireAuth,
         throw new NotFoundError();
     }
 
+    if(ticket.orderId) {
+        throw new BadRequestError('Cannot edit a reserved ticket');
+    }
+
     if(ticket.userId !== req.currentUser!.id) {
         throw new NotAuthorizedError();
     }
@@ -41,6 +46,7 @@ router.put('/api/tickets/:id', requireAuth,
 
     new TicketUpdatedPublisher(natsWrapper.client).publish({
         id: ticket.id,
+        version: ticket.version,
         title: ticket.title,
         price: ticket.price,
         userId: ticket.userId
